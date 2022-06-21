@@ -6,7 +6,9 @@ public class Exercise2 {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        int number = 10;
+        System.out.print("Informe um número aleátorio: ");
+        int number = sc.nextInt();
+        sc.nextLine();
         System.out.print("Informe um número para adivinhar o número informado pelo programa: ");
         int userNumber = sc.nextInt();
         while (userNumber != number){

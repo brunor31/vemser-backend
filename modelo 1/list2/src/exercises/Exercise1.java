@@ -21,7 +21,7 @@ public class Exercise1 {
         double discount = 0;
         for (int i=1; i<=10;i++){
             discount += 0.05;
-            System.out.printf("1 x R$ %.2f = R$ %.2f%n", (price - (price*discount)), ((price - (price*discount))*i));
+            System.out.printf("%d x R$ %.2f = R$ %.2f%n", i, (price - (price*discount)), ((price - (price*discount))*i));
         }
         sc.close();
     }
