@@ -9,12 +9,20 @@ public class Cliente {
 
     public void imprimirContatos(){
         for (Contato c : contatos){
-            c.imprimirContato();
+            if (c != null) {
+                c.imprimirContato();
+            } else {
+                System.out.println("O contato está vazio!");
+            }
         }
     }
     public void imprimirEnderecos(){
         for (Endereco e : enderecos){
-            e.imprimirEndereco();
+            if (e != null){
+                e.imprimirEndereco();
+            } else {
+                System.out.println("O endereço está vazio!");
+            }
         }
     }
     public void imprimirCliente(){

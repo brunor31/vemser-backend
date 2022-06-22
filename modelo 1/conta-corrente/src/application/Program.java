@@ -94,7 +94,7 @@ public class Program {
         cliente1.imprimirContatos();
         cliente1.imprimirEnderecos();
         contaCorrente1.imprimirContaCorrente();
-        contaCorrente1.sacar(1500.00);
+        contaCorrente1.sacar(4000.00);
         contaCorrente1.imprimirContaCorrente();
         contaCorrente1.depositar(1100.00);
         contaCorrente1.imprimirContaCorrente();

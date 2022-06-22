@@ -13,7 +13,7 @@ public class ContaCorrente {
                 "Saldo: R$%.2f, Cheque especial: R$%.2f\n", cliente.nome, numeroConta, agencia, saldo, chequeEspecial);
     }
     public boolean sacar(double montate){
-        if (montate < (saldo + chequeEspecial) && montate > 0){
+        if (montate <= (saldo + chequeEspecial) && montate > 0){
             saldo -= montate;
             return true;
         } else {
@@ -32,7 +32,7 @@ public class ContaCorrente {
         return saldo + chequeEspecial;
     }
     public boolean transferir(ContaCorrente contaCorrente, double valor){
-        if (valor > 0 && valor < (saldo + chequeEspecial)){
+        if (valor > 0 && valor <= (saldo + chequeEspecial)){
             saldo -= valor;
             contaCorrente.saldo += valor;
             return true;

@@ -21,6 +21,9 @@ public class Endereco {
                 System.out.printf("Endereço comercial - Rua: %s, Número: %d, Cep: %s, Cidade: %s, Estado: " +
                         "%s, País: %s\n", logradouro, numero, cep, cidade, estado, pais);
             }
+            default -> {
+                System.out.println("Endereço inválido");
+            }
         }
     }
 }
