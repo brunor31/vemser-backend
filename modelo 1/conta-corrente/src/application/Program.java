@@ -14,16 +14,17 @@ public class Program {
         Cliente cliente1 = new Cliente();
         cliente1.nome = "Bruno";
         cliente1.cpf = "891.484.640-74";
-        Contato contato1 = new Contato();
-        Contato contato2 = new Contato();
-        contato1.descricao = "Celular";
-        contato1.telefone = "51996031653";
-        contato1.tipo = 1;
-        contato2.descricao = "Telefone Fixo";
-        contato2.telefone = "5135498100";
-        contato2.tipo = 2;
-        cliente1.contatos[0] = contato1;
-        cliente1.contatos[1] = contato2;
+        Contato[] contatos = new Contato[2];
+        contatos[0] = new Contato();
+        contatos[1] = new Contato();
+        contatos[0].descricao = "Celular";
+        contatos[0].telefone = "51996031653";
+        contatos[0].tipo = 1;
+        contatos[1].descricao = "Telefone Fixo";
+        contatos[1].telefone = "5135498100";
+        contatos[1].tipo = 2;
+        cliente1.contatos[0] = contatos[0];
+        cliente1.contatos[1] = contatos[1];
         Endereco endereco1 = new Endereco();
         Endereco endereco2 = new Endereco();
         endereco1.tipo = 1;
@@ -114,5 +115,6 @@ public class Program {
         contaCorrente2.transferir(contaCorrente1, 2000.00);
         contaCorrente2.imprimirContaCorrente();
         contaCorrente1.imprimirContaCorrente();
+        cliente1.imprimirContatos();
     }
 }
