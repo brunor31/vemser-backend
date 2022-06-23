@@ -38,7 +38,7 @@ public class Cliente {
     }
 
     public void setContatos(int index, Contato contatos) {
-        if (index <= 2){
+        if (index < 2){
             this.contatos[index] = contatos;
         }
     }
@@ -48,7 +48,7 @@ public class Cliente {
     }
 
     public void setEnderecos(int index, Endereco enderecos) {
-        if (index <= 2) {
+        if (index < 2) {
             this.enderecos[index] = enderecos;
         }
     }

@@ -30,16 +30,7 @@ public class ContaCorrente extends Conta implements Impressao {
             return false;
         }
     }
-    @Override // Reescrevi o método também para considerar o valor de cheque especial, não foi pedido
-    public boolean transferir(Conta conta, double valor){
-        if (valor > 0 && valor <= retornarSaldoComChequeEspecial()){
-            setSaldo(getSaldo() - valor);
-            conta.setSaldo(conta.getSaldo() + valor);
-            return true;
-        } else {
-            return false;
-        }
-    }
+
     @Override
     public void imprimir() {
         System.out.printf("Nome do titular da conta: %s" +
