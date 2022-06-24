@@ -6,8 +6,8 @@ public class Cliente {
 
     private String nome;
     private String cpf;
-    private ArrayList<Contato> contatos = new ArrayList<>();
-    private ArrayList<Endereco> enderecos = new ArrayList<>();
+    private ArrayList<Contato> contatos;
+    private ArrayList<Endereco> enderecos;
 
     public Cliente(){
     }
@@ -51,21 +51,21 @@ public class Cliente {
         this.enderecos = enderecos;
     }
 
-    public void imprimirContatos(){
-        for (Contato c : contatos){
-            if (c != null) {
-                c.imprimirContato();
-            } else {
-                System.out.println("O contato está vazio!");
+    public void imprimirContatos() {
+        if(contatos != null){
+            for (Contato c : contatos) {
+                if (c != null) {
+                    c.imprimirContato();
+                }
             }
         }
     }
     public void imprimirEnderecos(){
-        for (Endereco e : enderecos){
-            if (e != null){
-                e.imprimirEndereco();
-            } else {
-                System.out.println("O endereço está vazio!");
+        if (enderecos != null){
+            for (Endereco e : enderecos){
+                if (e != null) {
+                    e.imprimirEndereco();
+                }
             }
         }
     }

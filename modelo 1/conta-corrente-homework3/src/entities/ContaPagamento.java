@@ -16,7 +16,7 @@ public class ContaPagamento extends Conta implements Impressao {
     @Override
     public boolean sacar(double montate){
         montate += TAXA_SAQUE;
-        if (montate <= getSaldo() + TAXA_SAQUE && montate > 0){
+        if (montate <= getSaldo() && montate > 0){
             setSaldo(getSaldo() - montate);
             return true;
         } else {
