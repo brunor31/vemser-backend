@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "13d74cbf-df5e-4560-bcdf-2d76ecaa8fb5",
+		"name": "Minha Coleção 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pessoa",
+			"item": [
+				{
+					"name": "Get/Pessoa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://back-vemserdbc.herokuapp.com/pessoa",
+							"protocol": "https",
+							"host": [
+								"back-vemserdbc",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pessoa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put/Pessoa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nome\": \"Bruno Rodrigues\",\r\n        \"dataNascimento\": \"1997-12-31\",\r\n        \"cpf\": \"12345678912\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://back-vemserdbc.herokuapp.com/pessoa/8",
+							"protocol": "https",
+							"host": [
+								"back-vemserdbc",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pessoa",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete/Pessoa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://back-vemserdbc.herokuapp.com/pessoa/8",
+							"protocol": "https",
+							"host": [
+								"back-vemserdbc",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pessoa",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post/Pessoa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Bruno Rodrigues\",\r\n    \"dataNascimento\": \"1997-12-31\",\r\n    \"cpf\": \"12345678912\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://back-vemserdbc.herokuapp.com/pessoa",
+							"protocol": "https",
+							"host": [
+								"back-vemserdbc",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pessoa"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contato",
+			"item": [
+				{
+					"name": "Get/Contato",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://back-vemserdbc.herokuapp.com/contato",
+							"protocol": "https",
+							"host": [
+								"back-vemserdbc",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"contato"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get/Contato",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://back-vemserdbc.herokuapp.com/contato?idPessoa=1",
+							"protocol": "https",
+							"host": [
+								"back-vemserdbc",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"contato"
+							],
+							"query": [
+								{
+									"key": "idPessoa",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete/Contato",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tipoContato\": \"COMERCIAL\",\r\n    \"numero\": \"048995876566\",\r\n    \"descricao\": \"trabalho\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://back-vemserdbc.herokuapp.com/contato?idPessoa=6",
+							"protocol": "https",
+							"host": [
+								"back-vemserdbc",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"contato"
+							],
+							"query": [
+								{
+									"key": "idPessoa",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
