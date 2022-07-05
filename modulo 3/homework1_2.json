@@ -139,7 +139,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://back-vemserdbc.herokuapp.com/contato?idPessoa=1",
+							"raw": "https://back-vemserdbc.herokuapp.com/contato/4",
 							"protocol": "https",
 							"host": [
 								"back-vemserdbc",
@@ -147,13 +147,8 @@
 								"com"
 							],
 							"path": [
-								"contato"
-							],
-							"query": [
-								{
-									"key": "idPessoa",
-									"value": "1"
-								}
+								"contato",
+								"4"
 							]
 						}
 					},
@@ -162,11 +157,11 @@
 				{
 					"name": "Delete/Contato",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tipoContato\": \"COMERCIAL\",\r\n    \"numero\": \"048995876566\",\r\n    \"descricao\": \"trabalho\"\r\n}\r\n",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -174,7 +169,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://back-vemserdbc.herokuapp.com/contato?idPessoa=6",
+							"raw": "https://back-vemserdbc.herokuapp.com/contato/9",
 							"protocol": "https",
 							"host": [
 								"back-vemserdbc",
@@ -182,13 +177,68 @@
 								"com"
 							],
 							"path": [
-								"contato"
-							],
-							"query": [
-								{
-									"key": "idPessoa",
-									"value": "6"
+								"contato",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"tipoContato\": \"COMERCIAL\",\r\n        \"numero\": \"51996031653\",\r\n        \"descricao\": \"wpp\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
+							}
+						},
+						"url": {
+							"raw": "https://back-vemserdbc.herokuapp.com/contato/4",
+							"protocol": "https",
+							"host": [
+								"back-vemserdbc",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"contato",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {   \r\n        \"tipoContato\": \"COMERCIAL\",\r\n        \"numero\": \"51995429246\",\r\n        \"descricao\": \"wpp\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://back-vemserdbc.herokuapp.com/contato/14",
+							"protocol": "https",
+							"host": [
+								"back-vemserdbc",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"contato",
+								"14"
 							]
 						}
 					},
