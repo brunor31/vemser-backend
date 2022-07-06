@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "08e2b04d-c6af-47b5-b577-de18675c5b5e",
+		"name": "Minha Coleção 3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pessoa",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/pessoa",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pessoa byname",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/pessoa/byname?nome=Rafa",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pessoa",
+						"byname"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "Rafa"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pessoa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Bruno Rodrigues\",\r\n    \"dataNascimento\": \"1997-12-31\",\r\n    \"cpf\": \"02635382069\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/pessoa",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pessoa",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/pessoa/7",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pessoa",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pessoa",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Bruno Rodrigues de Oliveira\",\r\n    \"dataNascimento\": \"1997-12-31\",\r\n    \"cpf\": \"02635382069\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/pessoa/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pessoa",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contato",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/contato",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contato"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contato byId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/contato/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contato",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contato",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"idPessoa\": 2,\r\n    \"tipoContato\": \"COMERCIAL\",\r\n    \"numero\": \"5135452424\",\r\n    \"descricao\": \"Work\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/contato/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contato",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contato",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"idPessoa\": 3,\r\n        \"tipoContato\": \"COMERCIAL\",\r\n        \"numero\": \"5135452424\",\r\n        \"descricao\": \"Work\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/contato/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contato",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/contato/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contato",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
