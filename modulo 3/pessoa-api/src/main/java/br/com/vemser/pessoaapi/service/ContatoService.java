@@ -14,7 +14,8 @@ public class ContatoService {
     }
 
     public Contato create(Contato contato){
-        return contatoRepository.create(contato);
+        PessoaService pessoaService = new PessoaService();
+        pessoaService.listar().stream().filter(pessoa -> pessoa.)
     }
 
     public List<Contato> listar(){

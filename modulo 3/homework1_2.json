@@ -185,7 +185,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Post/Contato",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -215,7 +215,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Put/Contato",
 					"request": {
 						"method": "PUT",
 						"header": [],

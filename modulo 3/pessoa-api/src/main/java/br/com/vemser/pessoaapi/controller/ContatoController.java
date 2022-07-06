@@ -26,9 +26,8 @@ public class ContatoController {
         return contatoService.listById(id);
     }
 
-    @PostMapping("/{idPessoa}")
-    public Contato create(@PathVariable("idPessoa")
-            @RequestBody Contato contato){
+    @PostMapping
+    public Contato create(@RequestBody Contato contato) throws Exception {
         return contatoService.create(contato);
     }
 
