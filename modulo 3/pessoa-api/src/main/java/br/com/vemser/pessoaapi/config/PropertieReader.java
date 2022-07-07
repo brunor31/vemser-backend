@@ -1,0 +1,18 @@
+package br.com.vemser.pessoaapi.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class PropertieReader {
+
+    @Value("${ambiente}")
+    private String ambiente;
+
+    public PropertieReader(){
+    }
+
+    public String getAmbiente(){
+        return ambiente;
+    }
+}
