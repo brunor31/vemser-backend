@@ -20,18 +20,18 @@ public class EnderecoController {
     }
 
     @GetMapping("/{idEndereco}")
-    public List<Endereco> listById(@PathVariable("idEndereco") Integer id){
-        return enderecoService.listById(id);
+    public Endereco listById(@PathVariable("idEndereco") Integer id){
+        return enderecoService.findById(id);
     }
 
     @GetMapping("/{idPessoa}/pessoa")
-    public List<Endereco> listByIdPessoa(@PathVariable("idPessoa") Integer id){
+    public List<Endereco> listByIdPessoa(@PathVariable("idPessoa") Integer id) throws Exception {
         return enderecoService.listByIdPessoa(id);
     }
 
     @PostMapping("/{idPessoa}")
     public Endereco create(@PathVariable("idPessoa") Integer id,
-                           @RequestBody Endereco endereco){
+                           @RequestBody Endereco endereco) throws Exception {
         return enderecoService.create(endereco, id);
     }
 

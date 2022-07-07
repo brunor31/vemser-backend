@@ -20,8 +20,8 @@ public class ContatoController {
     }
 
     @GetMapping("/{idPessoa}")
-    public List<Contato> listById(@PathVariable("idPessoa") Integer id){
-        return contatoService.listById(id);
+    public List<Contato> listById(@PathVariable("idPessoa") Integer id) throws Exception {
+        return contatoService.listByIdPessa(id);
     }
 
     @PostMapping("/{idPessoa}")
@@ -35,7 +35,7 @@ public class ContatoController {
         contatoService.update(id, contato);
     }
 
-    @DeleteMapping("{idContato}")
+    @DeleteMapping("/{idContato}")
     public void delete(@PathVariable("idContato") Integer id) throws Exception {
         contatoService.delete(id);
     }

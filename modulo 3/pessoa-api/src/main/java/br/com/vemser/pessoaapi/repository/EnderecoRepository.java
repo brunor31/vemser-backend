@@ -4,7 +4,6 @@ package br.com.vemser.pessoaapi.repository;
 import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.entity.TipoEndereco;
 import org.springframework.stereotype.Repository;
-import javax.el.ELException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -38,42 +37,5 @@ public class EnderecoRepository {
         endereco.setIdEndereco(COUNTER.incrementAndGet());
         listaenderecos.add(endereco);
         return endereco;
-    }
-
-    public Endereco update(Integer id, Endereco endereco) {
-        Endereco enderecoAtualizar = listaenderecos.stream()
-                .filter(x -> x.getIdEndereco().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new ELException("Endereço não encontrado"));
-        enderecoAtualizar.setIdPessoa(endereco.getIdPessoa());
-        enderecoAtualizar.setTipo(endereco.getTipo());
-        enderecoAtualizar.setLogradouro(endereco.getLogradouro());
-        enderecoAtualizar.setNumero(endereco.getNumero());
-        enderecoAtualizar.setComplemento(endereco.getComplemento());
-        enderecoAtualizar.setCep(endereco.getCep());
-        enderecoAtualizar.setCidade(endereco.getCidade());
-        enderecoAtualizar.setEstado(endereco.getEstado());
-        enderecoAtualizar.setPais(endereco.getPais());
-        return enderecoAtualizar;
-    }
-
-    public void delete(Integer id) throws Exception {
-        Endereco enderecoDeletar = listaenderecos.stream()
-                .filter(endereco -> endereco.getIdEndereco().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não encontrada"));
-        listaenderecos.remove(enderecoDeletar);
-    }
-
-    public List<Endereco> listById(Integer id) {
-        return listaenderecos.stream()
-                .filter(endereco -> endereco.getIdEndereco().equals(id))
-                .toList();
-    }
-
-    public List<Endereco> listByIdPessoa(Integer id){
-        return listaenderecos.stream()
-                .filter(endereco -> endereco.getIdPessoa().equals(id))
-                .toList();
     }
 }
