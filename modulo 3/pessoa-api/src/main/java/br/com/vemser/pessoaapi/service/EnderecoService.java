@@ -34,13 +34,15 @@ public class EnderecoService {
                 .toList();
     }
 
-    public Endereco create(Endereco endereco, Integer idPessoa) throws Exception {
+    public Endereco create(Integer idPessoa, Endereco endereco) throws Exception {
         pessoaService.findById(idPessoa);
+        endereco.setIdPessoa(idPessoa);
         return enderecoRepository.create(endereco);
     }
 
-    public Endereco update(Integer id, Endereco endereco) {
+    public Endereco update(Integer id, Endereco endereco) throws Exception {
         Endereco enderecoAtualizar = findById(id);
+        pessoaService.findById(endereco.getIdPessoa());
         enderecoAtualizar.setIdPessoa(endereco.getIdPessoa());
         enderecoAtualizar.setTipo(endereco.getTipo());
         enderecoAtualizar.setLogradouro(endereco.getLogradouro());

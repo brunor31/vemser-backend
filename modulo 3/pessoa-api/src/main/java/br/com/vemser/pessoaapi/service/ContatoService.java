@@ -20,7 +20,7 @@ public class ContatoService {
     public List<Contato> listar() {
         return contatoRepository.list();
     }
-    public List<Contato> listByIdPessa(Integer id) throws Exception {
+    public List<Contato> listByIdPessa(Integer id) throws Exception { // valida se o idPessoa existe no contato
         pessoaService.findById(id);
         return contatoRepository.list().stream()
                 .filter(contato -> contato.getIdPessoa().equals(id))
@@ -33,12 +33,14 @@ public class ContatoService {
                 .orElseThrow(() -> new Exception("Contato não encontrado"));
         return contatoRecuperado;
     }
-    public Contato create(Contato contato, Integer idPessoa) throws Exception {
-        Contato contatoCriar = findById(idPessoa);
+    public Contato create(Integer id, Contato contato) throws Exception {
+        pessoaService.findById(id);
+        contato.setIdPessoa(id);
         return  contatoRepository.create(contato);
     }
     public Contato update(Integer id, Contato contatoAtualizar) throws Exception{
         Contato contatoRecuperar = findById(id);
+        pessoaService.findById(contatoAtualizar.getIdPessoa());
         contatoRecuperar.setIdPessoa(contatoAtualizar.getIdPessoa());
         contatoRecuperar.setTipoContato(contatoAtualizar.getTipoContato());
         contatoRecuperar.setNumero(contatoAtualizar.getNumero());

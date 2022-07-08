@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 public class Pessoa {
 
+
     private Integer idPessoa;
     @NotBlank
     private String nome;
