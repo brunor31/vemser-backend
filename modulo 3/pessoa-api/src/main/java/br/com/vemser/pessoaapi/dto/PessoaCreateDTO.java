@@ -1,26 +1,19 @@
-package br.com.vemser.pessoaapi.entity;
+package br.com.vemser.pessoaapi.dto;
 
-import lombok.*;
+import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@ToString
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Pessoa {
+@Data
+public class PessoaCreateDTO {
 
-
-    private Integer idPessoa;
     @NotBlank
     private String nome;
     @NotNull
     private LocalDate dataNascimento;
     @CPF
     private String cpf;
-
 }

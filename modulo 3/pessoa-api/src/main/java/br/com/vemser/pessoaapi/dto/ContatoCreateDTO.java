@@ -1,20 +1,14 @@
-package br.com.vemser.pessoaapi.entity;
+package br.com.vemser.pessoaapi.dto;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@ToString
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Contato {
+@Data
+public class ContatoCreateDTO {
 
-
-    private Integer idContato;
     private Integer idPessoa;
     @NotNull
     private String tipoContato;

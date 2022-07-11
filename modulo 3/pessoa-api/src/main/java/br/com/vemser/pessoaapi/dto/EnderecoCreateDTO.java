@@ -1,20 +1,15 @@
-package br.com.vemser.pessoaapi.entity;
+package br.com.vemser.pessoaapi.dto;
 
-import lombok.*;
+import br.com.vemser.pessoaapi.entity.TipoEndereco;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+@Data
+public class EnderecoCreateDTO {
 
-@ToString
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Endereco {
-
-    private Integer idEndereco;
     private Integer idPessoa;
     @NotNull
     private TipoEndereco tipo;
@@ -36,4 +31,3 @@ public class Endereco {
     private String pais;
 
 }
-

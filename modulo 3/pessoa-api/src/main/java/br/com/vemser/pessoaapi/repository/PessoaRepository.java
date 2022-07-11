@@ -8,11 +8,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Repository
 public class PessoaRepository {
-   private static List<Pessoa> listaPessoas = new ArrayList<>();
+    private static List<Pessoa> listaPessoas = new ArrayList<>();
     private AtomicInteger COUNTER = new AtomicInteger();
 
     public PessoaRepository() {
@@ -29,6 +28,7 @@ public class PessoaRepository {
         listaPessoas.add(pessoa);
         return pessoa;
     }
+
     public List<Pessoa> list() {
         return listaPessoas;
     }

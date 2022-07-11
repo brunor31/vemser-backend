@@ -1,11 +1,14 @@
 package br.com.vemser.pessoaapi.service;
 
+import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
+import br.com.vemser.pessoaapi.dto.EnderecoDTO;
 import br.com.vemser.pessoaapi.entity.Endereco;
+import br.com.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.repository.EnderecoRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.el.ELException;
 import java.util.List;
 
 @Service
@@ -16,32 +19,34 @@ public class EnderecoService {
 
     @Autowired
     private PessoaService pessoaService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    public List<Endereco> listar() {
-        return enderecoRepository.list();
-    }
-    public Endereco findById(Integer id) {
-        Endereco enderecoAtualizar = enderecoRepository.list().stream()
-                .filter(x -> x.getIdEndereco().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new ELException("Endereço não encontrado"));
-        return enderecoAtualizar;
-    }
-    public List<Endereco> listByIdPessoa(Integer id) throws Exception {
-        pessoaService.findById(id);
+    public List<EnderecoDTO> listar() {
         return enderecoRepository.list().stream()
-                .filter(endereco -> endereco.getIdPessoa().equals(id))
+                .map(endereco -> objectMapper.convertValue(endereco, EnderecoDTO.class))
                 .toList();
     }
 
-    public Endereco create(Integer idPessoa, Endereco endereco) throws Exception {
-        pessoaService.findById(idPessoa);
-        endereco.setIdPessoa(idPessoa);
-        return enderecoRepository.create(endereco);
+    public List<EnderecoDTO> listByIdPessoa(Integer id) throws RegraDeNegocioException {
+        pessoaService.findById(id);
+        return enderecoRepository.list().stream()
+                .filter(endereco -> endereco.getIdPessoa().equals(id))
+                .map(endereco -> objectMapper.convertValue(endereco, EnderecoDTO.class))
+                .toList();
     }
 
-    public Endereco update(Integer id, Endereco endereco) throws Exception {
+    public EnderecoDTO create(Integer idPessoa, EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+        pessoaService.findById(idPessoa);
+        Endereco enderecoEntity = objectMapper.convertValue(endereco, Endereco.class);
+        enderecoEntity.setIdPessoa(idPessoa);
+        enderecoRepository.create(enderecoEntity);
+        return objectMapper.convertValue(enderecoEntity, EnderecoDTO.class);
+    }
+
+    public EnderecoDTO update(Integer id, EnderecoCreateDTO endereco) throws RegraDeNegocioException {
         Endereco enderecoAtualizar = findById(id);
+        enderecoAtualizar = objectMapper.convertValue(endereco, Endereco.class);
         pessoaService.findById(endereco.getIdPessoa());
         enderecoAtualizar.setIdPessoa(endereco.getIdPessoa());
         enderecoAtualizar.setTipo(endereco.getTipo());
@@ -52,11 +57,28 @@ public class EnderecoService {
         enderecoAtualizar.setCidade(endereco.getCidade());
         enderecoAtualizar.setEstado(endereco.getEstado());
         enderecoAtualizar.setPais(endereco.getPais());
-        return enderecoAtualizar;
+        return objectMapper.convertValue(enderecoAtualizar, EnderecoDTO.class);
     }
 
-    public void delete(Integer id) throws Exception {
+    public void delete(Integer id) throws RegraDeNegocioException {
         Endereco enderecoDeletar = findById(id);
         enderecoRepository.list().remove(enderecoDeletar);
     }
+
+    public EnderecoDTO findByIdDTO (Integer id) {
+        return enderecoRepository.list().stream()
+                .filter(endereco -> endereco.getIdEndereco().equals(id))
+                .map(endereco -> objectMapper.convertValue(endereco, EnderecoDTO.class))
+                .findFirst()
+                .get();
+    }
+
+    public Endereco findById(Integer id) throws RegraDeNegocioException {
+        Endereco enderecoAtualizar = enderecoRepository.list().stream()
+                .filter(x -> x.getIdEndereco().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RegraDeNegocioException("Endereço não encontrado"));
+        return enderecoAtualizar;
+    }
+
 }
