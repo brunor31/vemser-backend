@@ -14,6 +14,7 @@ public class PessoaCreateDTO {
     private String nome;
     @NotNull
     private LocalDate dataNascimento;
-    @CPF
     private String cpf;
+    @NotBlank
+    private String email;
 }

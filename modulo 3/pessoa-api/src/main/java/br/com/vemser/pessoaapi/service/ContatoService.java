@@ -56,8 +56,7 @@ public class ContatoService {
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {
-        Contato contatoDeletar = findById(id);
-        contatoRepository.list().remove(contatoDeletar);
+        contatoRepository.list().remove(findById(id));
     }
 
     public Contato findById(Integer id) throws RegraDeNegocioException {

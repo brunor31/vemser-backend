@@ -17,6 +17,8 @@ public class PessoaService {
     @Autowired
     private PessoaRepository pessoaRepository;
     @Autowired
+    private EmailService emailService;
+    @Autowired
     private ObjectMapper objectMapper;
 
     public List<PessoaDTO> listar() {
@@ -35,7 +37,9 @@ public class PessoaService {
     public PessoaDTO create(PessoaCreateDTO pessoa) {
         Pessoa pessoaEntity = objectMapper.convertValue(pessoa, Pessoa.class);
         pessoaRepository.create(pessoaEntity);
-        return objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+        emailService.sendEmailPessoaCreate(pessoaDTO);
+        return pessoaDTO;
     }
 
     public PessoaDTO update(Integer id, PessoaCreateDTO pessoa) throws RegraDeNegocioException {
@@ -44,19 +48,22 @@ public class PessoaService {
         pessoaAtualizar.setCpf(pessoa.getCpf());
         pessoaAtualizar.setNome(pessoa.getNome());
         pessoaAtualizar.setDataNascimento(pessoa.getDataNascimento());
-        return objectMapper.convertValue(pessoaAtualizar, PessoaDTO.class);
+        pessoaAtualizar.setEmail(pessoa.getEmail());
+        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaAtualizar, PessoaDTO.class);
+        emailService.sendEmailPessoaUpdate(pessoaDTO);
+        return pessoaDTO;
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {
-        Pessoa pessoaRecuperada = findById(id);
-        pessoaRepository.list().remove(pessoaRecuperada);
+        emailService.sendEmailPessoaDelete(findById(id));
+        pessoaRepository.list().remove(findById(id));
     }
 
     public Pessoa findById(Integer id) throws RegraDeNegocioException {
         Pessoa pessoaRecuperada = pessoaRepository.list().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não econtrada"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada"));
         return pessoaRecuperada;
     }
 }
