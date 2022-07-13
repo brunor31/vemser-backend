@@ -6,6 +6,9 @@ import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.repository.PessoaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,14 @@ public class PessoaService {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Operation(summary = "listar pessoas", description = "Lista todas as pessoas do banco")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
     public List<PessoaDTO> listar() {
         return pessoaRepository.list().stream()
                 .map(pessoa -> objectMapper.convertValue(pessoa, PessoaDTO.class))

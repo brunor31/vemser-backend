@@ -83,7 +83,7 @@ public class EmailService {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
             mimeMessageHelper.setFrom(from);
-            mimeMessageHelper.setTo(from);
+            mimeMessageHelper.setTo(pessoaDTO.getEmail());
             mimeMessageHelper.setSubject("Assunto 4");
             mimeMessageHelper.setText(getContentFromTemplateCreate(enderecoDTO, pessoaDTO), true);
 
@@ -110,7 +110,7 @@ public class EmailService {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
             mimeMessageHelper.setFrom(from);
-            mimeMessageHelper.setTo(from);
+            mimeMessageHelper.setTo(pessoaDTO.getEmail());
             mimeMessageHelper.setSubject("Assunto 4");
             mimeMessageHelper.setText(getContentFromTemplateUpdate(enderecoDTO, pessoaDTO), true);
 
@@ -137,7 +137,7 @@ public class EmailService {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
             mimeMessageHelper.setFrom(from);
-            mimeMessageHelper.setTo(from);
+            mimeMessageHelper.setTo(pessoa.getEmail());
             mimeMessageHelper.setSubject("Assunto 4");
             mimeMessageHelper.setText(getContentFromTemplateDelete(endereco, pessoa), true);
 
