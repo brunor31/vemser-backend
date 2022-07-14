@@ -21,32 +21,20 @@ import java.util.List;
 @RequestMapping("/pessoa")  // localhost:8080/pessoa/hello
 @Validated
 @Slf4j
+@ApiResponses({
+        @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+        @ApiResponse(responseCode = "404", description = "Pessoa não encontrada"),
+        @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+})
 public class PessoaController {
-
     @Autowired
     private PessoaService pessoaService;
 
     @Autowired
     private PropertieReader propertieReader;
 
-//    @GetMapping("/hello") // localhost:8080/pessoa/hello
-//    public String hello() {
-//        return "Hello World";
-//    }
-//
-//    @GetMapping("/ambiente")
-//    public String propertReader() {
-//        return propertieReader.getAmbiente();
-//    }
-
     @Operation(summary = "Listar pessoa pelo nome", description = "Retorna uma pessoa da lista pelo nome")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retorna a pessoa pelo nome"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponse(responseCode = "200", description = "Retorna a pessoa pelo nome")
     @GetMapping("/byname") // localhost:8080/pessoa/byname?nome=Rafa
     public List<PessoaDTO> listByName(@RequestParam("nome") String name) {
         log.info("lista pessoa por nome");
@@ -54,53 +42,32 @@ public class PessoaController {
     }
 
     @Operation(summary = "Listar pessoas", description = "Lista todas as pessoas")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas")
     @GetMapping // localhost:8080/pessoa
     public List<PessoaDTO> list() {
         log.info("listar pessoas");
         return pessoaService.listar();
     }
+
     @Operation(summary = "Criar uma nova pessoa", description = "Cria uma nova pessoa e inclui no banco")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Cria uma nova pessoa e armazena no banco"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponse(responseCode = "200", description = "Cria uma nova pessoa e armazena no banco")
     @PostMapping // localhost:8080/pessoa
     public ResponseEntity<PessoaDTO> create(@RequestBody @Valid PessoaCreateDTO pessoa) {
         log.info("criar pessoa");
         return ResponseEntity.ok(pessoaService.create(pessoa));
     }
+
     @Operation(summary = "Atualizar uma pessoa", description = "Busca uma pessoa no banco pelo id e atualiza")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Atualizar uma pessoa do banco"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponse(responseCode = "200", description = "Atualizar uma pessoa do banco")
     @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
     public void update(@PathVariable("idPessoa") Integer id,
                        @RequestBody @Valid PessoaCreateDTO pessoa) throws RegraDeNegocioException {
         log.info("atualizar pessoa");
         pessoaService.update(id, pessoa);
     }
+
     @Operation(summary = "Deletar uma pessoa", description = "Busca uma pessoa no banco pelo id e deleta")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Pessoa deleteda"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponse(responseCode = "200", description = "Pessoa deleteda")
     @DeleteMapping("/{idPessoa}") // localhost:8080/pessoa/10
     public void delete(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
         log.info("deletar pessoa");

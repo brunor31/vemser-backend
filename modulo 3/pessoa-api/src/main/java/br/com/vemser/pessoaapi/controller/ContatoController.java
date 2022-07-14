@@ -20,73 +20,52 @@ import java.util.List;
 @RequestMapping("/contato")
 @Validated
 @Slf4j
+@ApiResponses({
+        @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+        @ApiResponse(responseCode = "404", description = "Contato não encontrado"),
+        @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+})
 public class ContatoController {
 
     @Autowired
     private ContatoService contatoService;
 
     @Operation(summary = "Listar contatos", description = "Retorna uma lista com todos os contatos")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retornar todos os contatos"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponse(responseCode = "200", description = "Retorna todos os contatos do banco")
     @GetMapping
     public List<ContatoDTO> list() {
         log.info("listar contatos");
         return contatoService.listar();
     }
+
     @Operation(summary = "Listar contatos por pessoa", description = "Retorna uma lista com todos os contatos da pessoa informada no campo idPessoa")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retornar todos os contatos da pessoa"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponse(responseCode = "200", description = "Retornar todos os contatos da pessoa")
     @GetMapping("/{idPessoa}")
     public List<ContatoDTO> listById(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
         log.info("listar contatos por pessoa");
         return contatoService.listByIdPessoa(id);
     }
+
     @Operation(summary = "Criar um novo contato", description = "Cria um novo contato para uma pessoa e armazena no banco")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Cria um novo contato"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponse(responseCode = "200", description = "Cria um novo contato")
     @PostMapping("/{idPessoa}")
     public ContatoDTO create(@PathVariable("idPessoa") Integer id,
-                          @RequestBody @Valid ContatoCreateDTO contato) throws RegraDeNegocioException {
+                             @RequestBody @Valid ContatoCreateDTO contato) throws RegraDeNegocioException {
         log.info("criar contato");
         return contatoService.create(id, contato);
     }
+
     @Operation(summary = "Atualizar um contato", description = "Busca um contato no banco pelo campo id e atualiza")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Atualiza um contato"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponse(responseCode = "200", description = "Atualiza um contato")
     @PutMapping("/{idContato}")
     public void update(@PathVariable("idContato") Integer id,
                        @RequestBody @Valid ContatoCreateDTO contato) throws RegraDeNegocioException {
         log.info("atualizar contato");
         contatoService.update(id, contato);
     }
+
     @Operation(summary = "Deletar um contato", description = "Busca um contato no banco pelo campo id e deleta")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Deleta um contato"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
+    @ApiResponse(responseCode = "200", description = "Deleta um contato")
     @DeleteMapping("/{idContato}")
     public void delete(@PathVariable("idContato") Integer id) throws RegraDeNegocioException {
         log.info("deletar contato");

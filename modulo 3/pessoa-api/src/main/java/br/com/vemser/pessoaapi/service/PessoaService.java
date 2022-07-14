@@ -24,14 +24,6 @@ public class PessoaService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Operation(summary = "listar pessoas", description = "Lista todas as pessoas do banco")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
     public List<PessoaDTO> listar() {
         return pessoaRepository.list().stream()
                 .map(pessoa -> objectMapper.convertValue(pessoa, PessoaDTO.class))
@@ -40,7 +32,7 @@ public class PessoaService {
 
     public List<PessoaDTO> listByName(String nome) {
         return pessoaRepository.list().stream()
-                .filter(pessoa -> pessoa.getNome().contains(nome))
+                .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome))
                 .map(pessoa -> objectMapper.convertValue(pessoa, PessoaDTO.class))
                 .toList();
     }
