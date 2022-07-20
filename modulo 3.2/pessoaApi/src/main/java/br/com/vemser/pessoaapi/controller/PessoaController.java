@@ -29,14 +29,6 @@ public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
 
-    @Operation(summary = "Listar pessoa pelo nome", description = "Retorna uma pessoa da lista pelo nome")
-    @ApiResponse(responseCode = "200", description = "Retorna a pessoa pelo nome")
-    @GetMapping("/byname") // localhost:8080/pessoa/byname?nome=Rafa
-    public List<PessoaDTO> listByName(@RequestParam("nome") String name) {
-        log.info("lista pessoa por nome");
-        return pessoaService.listByName(name);
-    }
-
     @Operation(summary = "Listar pessoas", description = "Lista todas as pessoas")
     @ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas")
     @GetMapping // localhost:8080/pessoa
@@ -68,5 +60,28 @@ public class PessoaController {
     public void delete(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
         log.info("deletar pessoa");
         pessoaService.delete(id);
+    }
+    @GetMapping("/{nome}")
+    public List<PessoaDTO> findByNome(@RequestParam("nome") String nome){
+        return pessoaService.findByNome(nome);
+    }
+
+    @GetMapping("/{cpf}/cpf")
+    public PessoaDTO findByCpf(@RequestParam("cpf") String cpf){
+        return pessoaService.findByCpf(cpf);
+    }
+
+    @GetMapping("/{idPessoa}/endereco")
+    public List<PessoaDTO> getWithAdress(@RequestParam(required = false) Integer id) {
+        return pessoaService.listWithAdress(id);
+    }
+    @GetMapping("/{idPessoa}/contato")
+    public List<PessoaDTO> getWithContacts(@RequestParam(required = false) Integer id) {
+        return pessoaService.listWithContacts(id);
+    }
+
+    @GetMapping("/{idPessoa}/pet")
+    public List<PessoaDTO> getWithPets(@RequestParam(required = false) Integer id) {
+        return pessoaService.listWithPets(id);
     }
 }

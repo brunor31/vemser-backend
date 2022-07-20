@@ -45,13 +45,13 @@ public class EnderecoController {
         return enderecoService.findByIdDTO(id);
     }
 
-//    @Operation(summary = "Lista todos endereços de uma pessoa", description = "Lista de endereços por idPessoa")
-//    @ApiResponse(responseCode = "200", description = "Lista um endereço por idPessoa")
-//    @GetMapping("/{idPessoa}/pessoa")
-//    public List<EnderecoDTO> listByIdPessoa(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
-//        log.info("listar endereços por pessoa");
-//        return enderecoService.listByIdPessoa(id);
-//    }
+    @Operation(summary = "Lista todos endereços de uma pessoa", description = "Lista de endereços por idPessoa")
+    @ApiResponse(responseCode = "200", description = "Lista um endereço por idPessoa")
+    @GetMapping("/{idPessoa}/pessoa")
+    public List<EnderecoDTO> listByIdPessoa(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
+        log.info("listar endereços por pessoa");
+        return enderecoService.listByIdPessoa(id);
+    }
 
     @Operation(summary = "Cria um endereço", description = "Cria um endereço e atribuí a uma pessoa")
     @ApiResponse(responseCode = "200", description = "Cria um novo endereço")

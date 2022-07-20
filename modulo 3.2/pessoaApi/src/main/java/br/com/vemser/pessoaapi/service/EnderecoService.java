@@ -4,6 +4,7 @@ import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoDTO;
 import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.entity.EnderecoEntity;
+import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exception.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.repository.EnderecoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,13 +31,13 @@ public class EnderecoService {
                 .toList();
     }
 
-//    public List<EnderecoDTO> listByIdPessoa(Integer id) throws RegraDeNegocioException {
-//        pessoaService.findById(id);
-//        return enderecoRepository.findAll().stream()
-//                .filter(enderecoEntity -> enderecoEntity.getIdPessoa().equals(id))
-//                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
-//                .toList();
-//    }
+    public List<EnderecoDTO> listByIdPessoa(Integer id) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntity = pessoaService.findById(id);
+        return enderecoRepository.findAll().stream()
+                .filter(enderecoEntity -> enderecoEntity.getPessoas().contains(pessoaEntity))
+                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
+                .toList();
+    }
 
     public EnderecoDTO create(EnderecoCreateDTO endereco) throws RegraDeNegocioException {
         EnderecoEntity enderecoEntity = objectMapper.convertValue(endereco, EnderecoEntity.class);

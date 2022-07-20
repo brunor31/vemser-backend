@@ -1,7 +1,10 @@
 package br.com.vemser.pessoaapi.entity;
 
-import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -17,7 +20,7 @@ public class ContatoEntity {
     @SequenceGenerator(name = "CONTATO_SEQ", sequenceName = "seq_contato", allocationSize = 1)
     @Column(name = "id_contato")
     private Integer idContato;
-    @Column(name = "id_pessoa")
+    @Column(name = "id_pessoa", insertable = false, updatable = false)
     private Integer idPessoa;
     @Column(name = "tipo")
     private TipoContato tipoContato;
@@ -26,4 +29,8 @@ public class ContatoEntity {
     @Column(name = "descricao")
     private String descricao;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
+    private PessoaEntity pessoa;
 }
