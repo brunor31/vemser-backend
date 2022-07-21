@@ -23,4 +23,7 @@ public class PessoaCreateDTO {
     @Schema(description = "Email da Pessoa", example = "brunoroliveira_@outlook.com")
     @NotBlank
     private String email;
+
+
+
 }

@@ -2,8 +2,13 @@ package br.com.vemser.pessoaapi.controller;
 
 import br.com.vemser.pessoaapi.dto.PessoaCreateDTO;
 import br.com.vemser.pessoaapi.dto.PessoaDTO;
+import br.com.vemser.pessoaapi.dto.RelatorioDTO;
+import br.com.vemser.pessoaapi.entity.PessoaEntity;
+import br.com.vemser.pessoaapi.entity.TipoContato;
 import br.com.vemser.pessoaapi.exception.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.repository.PessoaRepository;
 import br.com.vemser.pessoaapi.service.PessoaService;
+import br.com.vemser.pessoaapi.service.RelatorioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -28,6 +33,12 @@ import java.util.List;
 public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
+
+    @Autowired
+    private PessoaRepository pessoaRepository;
+
+    @Autowired
+    private RelatorioService relatorioService;
 
     @Operation(summary = "Listar pessoas", description = "Lista todas as pessoas")
     @ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas")
@@ -71,17 +82,32 @@ public class PessoaController {
         return pessoaService.findByCpf(cpf);
     }
 
-    @GetMapping("/{idPessoa}/endereco")
-    public List<PessoaDTO> getWithAdress(@RequestParam(required = false) Integer id) {
+    @GetMapping("/endereco")
+    public List<PessoaDTO> getWithAdress(@RequestParam(required = false) Integer id) throws RegraDeNegocioException {
         return pessoaService.listWithAdress(id);
     }
-    @GetMapping("/{idPessoa}/contato")
+    @GetMapping("/contato")
     public List<PessoaDTO> getWithContacts(@RequestParam(required = false) Integer id) {
         return pessoaService.listWithContacts(id);
     }
 
-    @GetMapping("/{idPessoa}/pet")
+    @GetMapping("/pet")
     public List<PessoaDTO> getWithPets(@RequestParam(required = false) Integer id) {
         return pessoaService.listWithPets(id);
+    }
+
+    @GetMapping("/contato-por-tipo")
+    public List<PessoaEntity> listByTypeContact(TipoContato tipoContato){
+        List<PessoaEntity> pessoaEntities = pessoaRepository.listPessoasPorTipoContato(tipoContato);
+        return pessoaEntities;
+    }
+
+    @GetMapping("/pessoa-completo")
+    public List<PessoaDTO> listPessoaCompleta(@RequestParam(required = false) Integer id){
+        return pessoaService.listarPessoaCompleta(id);
+    }
+    @GetMapping("/pessoa-relatorio")
+    public List<RelatorioDTO> relatorio(@RequestParam(required = false) Integer id){
+        return relatorioService.relatorios(id);
     }
 }

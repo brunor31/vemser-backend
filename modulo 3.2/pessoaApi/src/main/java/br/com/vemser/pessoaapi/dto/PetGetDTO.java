@@ -8,7 +8,7 @@ import lombok.Data;
 public class PetGetDTO {
 
     @Schema(description = "Id da pessoa")
-    private PessoaDTO pessoaDTO;
+    private PessoaPetDTO pessoaPetDTO;
     @Schema(description = "Nome da pessoa")
     private String nome;
     @Schema(description = "Tipo do pet")

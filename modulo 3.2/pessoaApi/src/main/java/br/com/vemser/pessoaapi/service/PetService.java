@@ -1,9 +1,6 @@
 package br.com.vemser.pessoaapi.service;
 
-import br.com.vemser.pessoaapi.dto.PessoaDTO;
-import br.com.vemser.pessoaapi.dto.PetCreateDTO;
-import br.com.vemser.pessoaapi.dto.PetDTO;
-import br.com.vemser.pessoaapi.dto.PetGetDTO;
+import br.com.vemser.pessoaapi.dto.*;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.entity.PetEntity;
 import br.com.vemser.pessoaapi.exception.RegraDeNegocioException;
@@ -28,7 +25,7 @@ public class PetService {
         return petRepository.findAll().stream()
                 .map(petEntity -> {
                     PetGetDTO petGetDTO = objectMapper.convertValue(petEntity, PetGetDTO.class);
-                    petGetDTO.setPessoaDTO(objectMapper.convertValue(petEntity.getPessoaEntity(), PessoaDTO.class));
+                    petGetDTO.setPessoaPetDTO(objectMapper.convertValue(petEntity.getPessoaEntity(), PessoaPetDTO.class));
                     return petGetDTO;
                 })
                 .toList();
@@ -36,19 +33,30 @@ public class PetService {
 
     public PetDTO create(PetCreateDTO pet) throws RegraDeNegocioException {
         PetEntity petEntity = objectMapper.convertValue(pet, PetEntity.class);
-        petEntity.setPessoaEntity(pessoaService.findById(pet.getIdPessoa()));
-        petRepository.save(petEntity);
-        return objectMapper.convertValue(petEntity, PetDTO.class);
+        PessoaEntity pessoaEntity = pessoaService.findById(pet.getIdPessoa());
+        if (pessoaEntity.getPetEntity() == null){
+            petEntity.setPessoaEntity(pessoaEntity);
+            petRepository.save(petEntity);
+            return objectMapper.convertValue(petEntity, PetDTO.class);
+        } else {
+            throw new RegraDeNegocioException("Pessoa já possuí pet");
+        }
     }
 
     public PetDTO update(Integer id, PetCreateDTO pet) throws RegraDeNegocioException {
         PetEntity petEntity = findById(id);
-        petEntity.setPessoaEntity(pessoaService.findById(pet.getIdPessoa()));
-        petEntity.setNome(pet.getNome());
-        petEntity.setTipo(pet.getTipo());
-        petRepository.save(petEntity);
-        return objectMapper.convertValue(petEntity, PetDTO.class);
+        PessoaEntity pessoaEntity = pessoaService.findById(pet.getIdPessoa());
+        if (pessoaEntity.getPetEntity() == null) {
+            petEntity.setPessoaEntity(pessoaEntity);
+            petEntity.setNome(pet.getNome());
+            petEntity.setTipo(pet.getTipo());
+            petRepository.save(petEntity);
+            return objectMapper.convertValue(petEntity, PetDTO.class);
+        } else {
+        throw new RegraDeNegocioException("Pessoa já possuí pet");
     }
+
+}
 
     public void delete(Integer id) throws RegraDeNegocioException {
         PetEntity petEntity = findById(id);

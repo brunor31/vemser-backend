@@ -37,5 +37,4 @@ public class EnderecoCreateDTO {
     @NotNull
     @Schema(description = "Nome do país", example = "Brasil")
     private String pais;
-
 }

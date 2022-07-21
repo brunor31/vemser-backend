@@ -1,8 +1,6 @@
 package br.com.vemser.pessoaapi.service;
 
-import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
-import br.com.vemser.pessoaapi.dto.EnderecoDTO;
-import br.com.vemser.pessoaapi.dto.PessoaDTO;
+import br.com.vemser.pessoaapi.dto.*;
 import br.com.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exception.RegraDeNegocioException;
@@ -12,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class EnderecoService {
@@ -39,24 +38,21 @@ public class EnderecoService {
                 .toList();
     }
 
-    public EnderecoDTO create(EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+    public EnderecoDTO create(Integer id, EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntity = pessoaService.findById(id);
         EnderecoEntity enderecoEntity = objectMapper.convertValue(endereco, EnderecoEntity.class);
+        enderecoEntity.setPessoas(Set.of(pessoaEntity));
         enderecoRepository.save(enderecoEntity);
         return objectMapper.convertValue(enderecoEntity, EnderecoDTO.class);
     }
 
-    public EnderecoDTO update(Integer id, EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+    public EnderecoDTO update(Integer id, EnderecoDTO endereco) throws RegraDeNegocioException {
+        PessoaEntity pessoaEntity = pessoaService.findById(endereco.getIdPessoa());
         EnderecoEntity enderecoEntity = findById(id);
-        enderecoEntity.setTipo(endereco.getTipo());
-        enderecoEntity.setLogradouro(endereco.getLogradouro());
-        enderecoEntity.setNumero(endereco.getNumero());
-        enderecoEntity.setComplemento(endereco.getComplemento());
-        enderecoEntity.setCep(endereco.getCep());
-        enderecoEntity.setCidade(endereco.getCidade());
-        enderecoEntity.setEstado(endereco.getEstado());
-        enderecoEntity.setPais(endereco.getPais());
-        enderecoRepository.save(enderecoEntity);
-        return objectMapper.convertValue(enderecoEntity, EnderecoDTO.class);
+        EnderecoEntity enderecoEntity1 = objectMapper.convertValue(endereco, EnderecoEntity.class);
+        enderecoEntity1.setIdEndereco(id);
+        enderecoEntity1.setPessoas(Set.of(pessoaEntity));
+        return objectMapper.convertValue(enderecoRepository.save(enderecoEntity1), EnderecoDTO.class);
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {

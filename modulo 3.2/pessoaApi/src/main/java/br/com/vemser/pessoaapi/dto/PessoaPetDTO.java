@@ -6,9 +6,9 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class EnderecoDTO extends EnderecoCreateDTO {
+public class PessoaPetDTO extends PessoaCreateDTO {
 
-    @Schema(description = "Id do endereço", example = "2")
-    private Integer idEndereco;
+    @Schema(description = "Id da Pessoa", example = "1")
     private Integer idPessoa;
+
 }

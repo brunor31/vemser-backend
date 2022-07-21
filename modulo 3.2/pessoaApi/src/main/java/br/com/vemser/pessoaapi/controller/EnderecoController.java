@@ -2,7 +2,9 @@ package br.com.vemser.pessoaapi.controller;
 
 import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoDTO;
+import br.com.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.vemser.pessoaapi.exception.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.repository.EnderecoRepository;
 import br.com.vemser.pessoaapi.service.EnderecoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,6 +30,9 @@ public class EnderecoController {
 
     @Autowired
     private EnderecoService enderecoService;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     @Operation(summary = "Listar endereçocs", description = "Lista todos endereços")
     @ApiResponse(responseCode = "200", description = "Lista todos os endereços do banco")
@@ -56,16 +61,17 @@ public class EnderecoController {
     @Operation(summary = "Cria um endereço", description = "Cria um endereço e atribuí a uma pessoa")
     @ApiResponse(responseCode = "200", description = "Cria um novo endereço")
     @PostMapping("/{idPessoa}")
-    public EnderecoDTO create(@RequestBody @Valid EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+    public EnderecoDTO create(@PathVariable("idPessoa") Integer id,
+                              @RequestBody @Valid EnderecoCreateDTO endereco) throws RegraDeNegocioException {
         log.info("criar endereço");
-        return enderecoService.create(endereco);
+        return enderecoService.create(id, endereco);
     }
 
     @Operation(summary = "Atualiza um endereço", description = "Atualiza um endereço")
     @ApiResponse(responseCode = "200", description = "Atualiza um endereço")
     @PutMapping("/{idEndereco}")
     public void update(@PathVariable("idEndereco") Integer id,
-                       @RequestBody @Valid EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+                       @RequestBody @Valid EnderecoDTO endereco) throws RegraDeNegocioException {
         log.info("atualizar endereço");
         enderecoService.update(id, endereco);
     }
@@ -76,5 +82,10 @@ public class EnderecoController {
     public void delete(@PathVariable("idEndereco") Integer id) throws RegraDeNegocioException {
         log.info("deletar endereço");
         enderecoService.delete(id);
+    }
+
+    @GetMapping("/pais")
+    public List<EnderecoEntity> listByCountry(String pais){
+        return enderecoRepository.listByCountry(pais);
     }
 }
