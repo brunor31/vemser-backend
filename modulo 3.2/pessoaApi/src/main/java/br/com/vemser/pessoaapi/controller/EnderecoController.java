@@ -11,6 +11,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,8 +88,18 @@ public class EnderecoController {
         enderecoService.delete(id);
     }
 
-    @GetMapping("/pais")
-    public List<EnderecoEntity> listByCountry(String pais){
-        return enderecoRepository.listByCountry(pais);
+    @GetMapping("/cep")
+    public Page<EnderecoEntity> listByCep(Integer pagina, Integer registros){
+        Sort order = Sort.by("cep");
+        Pageable pageable = PageRequest.of(pagina, registros, order);
+        return enderecoRepository.lisByCep(pageable);
     }
+
+    @GetMapping("/pais")
+    public Page<EnderecoEntity> lisByCountry(@RequestParam("pais")String pais, Integer pagina, Integer registros){
+        Sort order = Sort.by("pais");
+        Pageable pageable = PageRequest.of(pagina, registros, order);
+        return enderecoRepository.findByPaisIgnoreCase(pais, pageable);
+    }
+
 }

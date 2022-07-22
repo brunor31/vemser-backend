@@ -2,13 +2,20 @@ package br.com.vemser.pessoaapi.controller;
 
 import br.com.vemser.pessoaapi.dto.ContatoCreateDTO;
 import br.com.vemser.pessoaapi.dto.ContatoDTO;
+import br.com.vemser.pessoaapi.entity.ContatoEntity;
+import br.com.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.vemser.pessoaapi.exception.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.repository.ContatoRepository;
 import br.com.vemser.pessoaapi.service.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +35,9 @@ public class ContatoController {
 
     @Autowired
     private ContatoService contatoService;
+
+    @Autowired
+    private ContatoRepository contatoRepository;
 
     @Operation(summary = "Listar contatos", description = "Retorna uma lista com todos os contatos")
     @ApiResponse(responseCode = "200", description = "Retorna todos os contatos do banco")
@@ -70,4 +80,12 @@ public class ContatoController {
         log.info("deletar contato");
         contatoService.delete(id);
     }
+
+    @GetMapping("/descricao")
+    public Page<ContatoEntity> listByCountry(Integer pagina, Integer registros){
+        Sort order = Sort.by("descricao");
+        Pageable pageable = PageRequest.of(pagina, registros, order);
+        return contatoRepository.lisByDescricao(pageable);
+    }
+
 }
