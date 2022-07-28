@@ -21,11 +21,12 @@ public class TokenService {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("${jwt.expiration}")
+    private String expiration;
+
     public String getToken(UsuarioEntity usuario){
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expiration = now.plusDays(1);
-        Date dateNow = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
-        Date dateExpiration = Date.from(expiration.atZone(ZoneId.systemDefault()).toInstant());
+        Date dateNow = new Date();
+        Date dateExpiration = new Date(dateNow.getTime() + Long.valueOf(expiration));
         String token = Jwts.builder()
                 .setIssuer("pessoaApi")
                 .claim(Claims.ID, usuario.getIdUsuario())
