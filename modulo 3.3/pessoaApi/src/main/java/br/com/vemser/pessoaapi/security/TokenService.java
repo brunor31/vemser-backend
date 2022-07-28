@@ -1,35 +1,60 @@
 package br.com.vemser.pessoaapi.security;
 
 import br.com.vemser.pessoaapi.entity.UsuarioEntity;
-import br.com.vemser.pessoaapi.service.UsuarioService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
 public class TokenService {
 
-    private final UsuarioService usuarioService;
+    @Value("${jwt.secret}")
+    private String secret;
 
     public String getToken(UsuarioEntity usuario){
-        String tokenTexto = usuario.getLogin() + ";" + usuario.getSenha();
-        String token = Base64.getEncoder().encodeToString(tokenTexto.getBytes());
-        return token;
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expiration = now.plusDays(1);
+        Date dateNow = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+        Date dateExpiration = Date.from(expiration.atZone(ZoneId.systemDefault()).toInstant());
+        String token = Jwts.builder()
+                .setIssuer("pessoaApi")
+                .claim(Claims.ID, usuario.getIdUsuario())
+                .setIssuedAt(dateNow)
+                .setExpiration(dateExpiration)
+                .signWith(SignatureAlgorithm.HS256, secret)
+                .compact();
+        return TokenAuthenticationFilter.BEARER + token;
     }
 
-    public Optional<UsuarioEntity> isValid(String token){
-        if(token == null) {
-            return Optional.empty();
+    public UsernamePasswordAuthenticationToken isValid(String token){
+        if (token == null){
+            return null;
         }
+        Claims body = Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
+        Integer idUsuario = body.get(Claims.ID, Integer.class);
 
-        byte[] decodeBytes = Base64.getUrlDecoder().decode(token);
-        String decoded = new String(decodeBytes);
-        String[] split = decoded.split(";");
-
-        return usuarioService.findByLoginAndSenha(split[0], split[1]);
-
+        if(idUsuario != null){
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                    new UsernamePasswordAuthenticationToken(
+                            idUsuario,
+                            null,
+                            Collections.emptyList()
+                    );
+            return usernamePasswordAuthenticationToken;
+        }
+        return null;
     }
 }
